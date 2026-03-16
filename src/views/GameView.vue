@@ -134,7 +134,7 @@ function goBack() {
 
     <JackpotMeter />
 
-    <div class="reel-area" style="position: relative;">
+    <div class="reel-area">
       <ReelGrid
         :grid="grid"
         :spinning="spinning"
@@ -142,13 +142,14 @@ function goBack() {
         :win-positions="winPositions"
         :theme-color="config.theme.primaryColor"
       />
-      <WinBanner
-        :amount="lastWin"
-        :visible="showWin"
-        :theme-color="config.theme.primaryColor"
-        @dismiss="showWin = false"
-      />
     </div>
+
+    <WinBanner
+      :amount="lastWin"
+      :visible="showWin"
+      :theme-color="config.theme.primaryColor"
+      @dismiss="showWin = false"
+    />
 
     <div v-if="freeSpins > 0" class="free-spins-badge">
       <Zap :size="14" />

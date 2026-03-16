@@ -34,7 +34,7 @@ const tileClass = computed(() => ({
 }
 
 .symbol-icon {
-  font-size: 32px;
+  font-size: 42px;
   line-height: 1;
 }
 
