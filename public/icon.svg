@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <rect width="120" height="120" rx="24" fill="#0a0a0f"/>
+  <rect x="8" y="8" width="104" height="104" rx="20" stroke="#c8a44e" stroke-width="2" opacity="0.3"/>
+  <g transform="translate(60,60)">
+    <!-- Dice face 1 -->
+    <rect x="-36" y="-36" width="30" height="30" rx="5" fill="#1a1a2e" stroke="#c8a44e" stroke-width="1.5"/>
+    <circle cx="-21" cy="-21" r="3" fill="#c8a44e"/>
+    <!-- Dice face 2 -->
+    <rect x="6" y="-36" width="30" height="30" rx="5" fill="#1a1a2e" stroke="#c8a44e" stroke-width="1.5"/>
+    <circle cx="15" cy="-27" r="3" fill="#c8a44e"/>
+    <circle cx="27" cy="-27" r="3" fill="#c8a44e"/>
+    <!-- Dice face 3 -->
+    <rect x="-36" y="6" width="30" height="30" rx="5" fill="#1a1a2e" stroke="#c8a44e" stroke-width="1.5"/>
+    <circle cx="-27" cy="15" r="3" fill="#c8a44e"/>
+    <circle cx="-21" cy="21" r="3" fill="#c8a44e"/>
+    <circle cx="-15" cy="27" r="3" fill="#c8a44e"/>
+    <!-- Star/jackpot -->
+    <rect x="6" y="6" width="30" height="30" rx="5" fill="#c8a44e" opacity="0.15" stroke="#c8a44e" stroke-width="1.5"/>
+    <text x="21" y="26" font-size="20" text-anchor="middle" fill="#c8a44e">&#9733;</text>
+  </g>
+</svg>

@@ -1,0 +1,22 @@
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #141420;
+  --bg-card: #1a1a2e;
+  --bg-elevated: #22223a;
+  --text-primary: #f0f0f5;
+  --text-secondary: #8888aa;
+  --text-muted: #555570;
+  --accent-gold: #c8a44e;
+  --accent-green: #22c55e;
+  --accent-red: #ef4444;
+  --border-color: #2a2a40;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+  --shadow-glow: 0 0 20px rgba(200, 164, 78, 0.3);
+  --nav-height: 60px;
+  --symbol-size: 60px;
+  --reel-gap: 4px;
+  --font-mono: 'SF Mono', 'Fira Code', monospace;
+}
