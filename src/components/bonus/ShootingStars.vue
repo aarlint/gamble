@@ -23,10 +23,10 @@ const picks = ref(0)
 const totalMultiplier = ref(0)
 const phase = ref<'picking' | 'summary'>('picking')
 
-const MAX_PICKS = 5
-const TOTAL_STARS = 15
+const MAX_PICKS = 3
+const TOTAL_STARS = 12
 
-const possibleMultipliers = [1, 1, 2, 2, 2, 3, 3, 4, 4, 5, 6, 7, 8, 10, 15]
+const possibleMultipliers = [1, 1, 1, 2, 2, 2, 3, 3, 4, 5, 6, 8]
 
 const totalWin = computed(() => {
   return Math.round(totalMultiplier.value * props.bet * 100) / 100

@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
-const JACKPOT_BASE = 5000
+const JACKPOT_BASE = 500
 const STORAGE_KEY = 'gamble-jackpot'
 
 export const useJackpotStore = defineStore('jackpot', () => {
@@ -16,8 +16,8 @@ export const useJackpotStore = defineStore('jackpot', () => {
   }
 
   function checkWin(): boolean {
-    // 1 in 50,000 chance per spin
-    return Math.random() < 0.00002
+    // 1 in 200,000 chance per spin
+    return Math.random() < 0.000005
   }
 
   function claimJackpot(): number {

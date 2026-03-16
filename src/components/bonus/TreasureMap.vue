@@ -25,7 +25,7 @@ const totalWin = computed(() => {
 })
 
 function generateMultipliers(): number[] {
-  const pool = [1, 1, 2, 2, 3, 4, 5, 7, 10]
+  const pool = [1, 1, 1, 2, 2, 3, 3, 4, 5]
   // Shuffle
   for (let i = pool.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))

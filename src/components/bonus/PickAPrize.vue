@@ -29,22 +29,26 @@ function initGame() {
   gameOver.value = false
   revealingEnd.value = false
 
-  const multipliers = [1, 1, 2, 2, 3, 3, 4, 5, 6, 7, 8]
+  const multipliers = [1, 1, 2, 2, 3, 3, 5]
   // Shuffle multipliers
   for (let i = multipliers.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))
     ;[multipliers[i], multipliers[j]] = [multipliers[j], multipliers[i]]
   }
 
-  // Pick a random position for the END shell
-  const endIndex = Math.floor(Math.random() * 12)
+  // Place 3 END shells at random positions among 10 total
+  const endIndices = new Set<number>()
+  while (endIndices.size < 3) {
+    endIndices.add(Math.floor(Math.random() * 10))
+  }
 
-  const positions = generateScatteredPositions(12)
+  const positions = generateScatteredPositions(10)
 
-  shells.value = Array.from({ length: 12 }, (_, i) => ({
+  let mIdx = 0
+  shells.value = Array.from({ length: 10 }, (_, i) => ({
     id: i,
     opened: false,
-    value: i === endIndex ? 0 : multipliers[i < endIndex ? i : i - 1],
+    value: endIndices.has(i) ? 0 : multipliers[mIdx++],
     x: positions[i].x,
     y: positions[i].y,
     rotation: Math.random() * 20 - 10,
