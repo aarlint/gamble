@@ -1,22 +1,16 @@
-import Database from 'better-sqlite3'
-import { drizzle } from 'drizzle-orm/better-sqlite3'
-import * as schema from './schema'
+import { Database } from 'bun:sqlite'
 import { resolve } from 'path'
-
-const dbPath = resolve(process.env.DB_PATH || './data/gamble.db')
-
-// Ensure data directory exists
 import { mkdirSync } from 'fs'
 import { dirname } from 'path'
+
+const dbPath = resolve(process.env.DB_PATH || './data/gamble.db')
 mkdirSync(dirname(dbPath), { recursive: true })
 
-const sqlite = new Database(dbPath)
-sqlite.pragma('journal_mode = WAL')
-
-export const db = drizzle(sqlite, { schema })
+export const db = new Database(dbPath)
+db.exec('PRAGMA journal_mode = WAL')
 
 // Init tables
-sqlite.exec(`
+db.exec(`
   CREATE TABLE IF NOT EXISTS sessions (
     id TEXT PRIMARY KEY,
     starting_pot INTEGER NOT NULL,
@@ -39,7 +33,7 @@ sqlite.exec(`
 `)
 
 // Ensure jackpot row exists
-const existing = sqlite.prepare('SELECT id FROM jackpot WHERE id = 1').get()
+const existing = db.query('SELECT id FROM jackpot WHERE id = 1').get()
 if (!existing) {
-  sqlite.prepare('INSERT INTO jackpot (id, amount, updated_at) VALUES (1, 5000, ?)').run(Date.now())
+  db.run('INSERT INTO jackpot (id, amount, updated_at) VALUES (1, 5000, ?)', [Date.now()])
 }

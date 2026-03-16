@@ -1,8 +1,6 @@
 import { Hono } from 'hono'
 import { serveStatic } from 'hono/bun'
 import { db } from './db'
-import { jackpotTable, spinHistory } from './schema'
-import { eq, desc } from 'drizzle-orm'
 import { readFileSync } from 'fs'
 import { resolve } from 'path'
 
@@ -11,9 +9,9 @@ const app = new Hono()
 // API routes
 app.get('/api/health', (c) => c.json({ status: 'ok' }))
 
-app.get('/api/jackpot', async (c) => {
-  const rows = await db.select().from(jackpotTable).where(eq(jackpotTable.id, 1))
-  return c.json({ amount: rows[0]?.amount ?? 5000 })
+app.get('/api/jackpot', (c) => {
+  const row = db.query('SELECT amount FROM jackpot WHERE id = 1').get() as { amount: number } | null
+  return c.json({ amount: row?.amount ?? 5000 })
 })
 
 app.post('/api/jackpot', async (c) => {
@@ -21,35 +19,22 @@ app.post('/api/jackpot', async (c) => {
   if (typeof amount !== 'number' || amount < 0) {
     return c.json({ error: 'Invalid amount' }, 400)
   }
-  await db
-    .update(jackpotTable)
-    .set({ amount, updatedAt: new Date() })
-    .where(eq(jackpotTable.id, 1))
+  db.run('UPDATE jackpot SET amount = ?, updated_at = ? WHERE id = 1', [amount, Date.now()])
   return c.json({ ok: true })
 })
 
 app.post('/api/spins', async (c) => {
-  const body = await c.req.json()
-  const { id, sessionId, gameId, bet, win, net } = body
-  await db.insert(spinHistory).values({
-    id,
-    sessionId,
-    gameId,
-    bet,
-    win,
-    net,
-    createdAt: new Date(),
-  })
+  const { id, sessionId, gameId, bet, win, net } = await c.req.json()
+  db.run(
+    'INSERT INTO spin_history (id, session_id, game_id, bet, win, net, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
+    [id, sessionId, gameId, bet, win, net, Date.now()]
+  )
   return c.json({ ok: true })
 })
 
-app.get('/api/stats', async (c) => {
-  const recent = await db
-    .select()
-    .from(spinHistory)
-    .orderBy(desc(spinHistory.createdAt))
-    .limit(100)
-  return c.json({ spins: recent })
+app.get('/api/stats', (c) => {
+  const spins = db.query('SELECT * FROM spin_history ORDER BY created_at DESC LIMIT 100').all()
+  return c.json({ spins })
 })
 
 // Serve static files from dist/
